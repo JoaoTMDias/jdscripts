@@ -1,25 +1,16 @@
 #!/usr/bin/env node
-import React from 'react';
-import {render} from 'ink';
-import meow from 'meow';
-import App from './ui';
+import React from "react";
+import { render } from "ink";
+import { MemoryRouter } from "react-router";
+import { Start, StaticTitle } from "./steps";
 
-const cli = meow(`
-	Usage
-	  $ jdscripts
+function Shell() {
+	return (
+		<MemoryRouter>
+			<StaticTitle />
+			<Start />
+		</MemoryRouter>
+	);
+}
 
-	Options
-		--name  Your name
-
-	Examples
-	  $ jdscripts --name=Jane
-	  Hello, Jane
-`, {
-	flags: {
-		name: {
-			type: 'string'
-		}
-	}
-});
-
-render(<App name={cli.flags.name}/>);
+render(<Shell />);
