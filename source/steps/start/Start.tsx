@@ -8,17 +8,19 @@
  */
 import React from "react";
 import { Text, useInput, useApp } from "ink";
-import { Routes, Route, useNavigate } from "react-router";
+import { Routes, Route, useNavigate, useLocation } from "react-router";
 import { Menu } from "../menu";
+import Typecheck from "../typecheck/Typecheck";
+import { StaticTitle } from "../index";
 
 function Start(): JSX.Element {
+	const location = useLocation();
 	const navigate = useNavigate();
 	const { exit } = useApp();
 
 	useInput((_, key) => {
-		const IS_ON_START = location.pathname === "/";
-
-		if (key.escape) {
+		if (location && key.escape) {
+			const IS_ON_START = location?.pathname === "/";
 			if (IS_ON_START) {
 				exit();
 			} else {
@@ -29,10 +31,11 @@ function Start(): JSX.Element {
 
 	return (
 		<>
+			<StaticTitle />
 			<Routes>
 				<Route path="/" element={<Menu />} />
 				<Route path="/configuration" element={<Text>Setup goes here</Text>} />
-				<Route path="/run-typecheck" element={<Text>Runs typecheck</Text>} />
+				<Route path="/run-typecheck" element={<Typecheck />} />
 				<Route path="/run-linting" element={<Text>Run Linting</Text>} />
 				<Route path="/run-tests" element={<Text>Run tests</Text>} />
 			</Routes>
